@@ -1,0 +1,52 @@
+#include <iostream>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+string addFunction(string numberA, string numberB, int m) {
+    int lengthA = numberA.length();
+    int lengthB = numberB.length();
+    int maxLength = max(lengthA, lengthB);
+    numberA = string(maxLength - lengthA, '0') + numberA;
+    numberB = string(maxLength - lengthB, '0') + numberB;
+
+    string result(maxLength, '0');
+
+    int carry = 0;
+    for (int i = maxLength - 1; i >= 0; i--) {
+        int digitA = numberA[i] - '0';
+        int digitB = numberB[i] - '0';
+
+        int sum = digitA + digitB + carry;
+        int digitSum = sum % 10;
+        carry = sum / 10;
+
+        result[i] = digitSum + '0';
+    }
+
+    if (carry > 0) {
+        result = to_string(carry) + result;
+    }
+
+    return result;
+}
+
+int main() {
+    int m;
+    string numberA;
+    string numberB;
+
+    cout << "Enter the amount of digits you would like your numbers to have: ";
+    cin >> m;
+    cout << "Enter the first positive number with " << m << " digits: ";
+    cin >> numberA;
+    cout << "Enter the second positive number with " << m << " digits: ";
+    cin >> numberB;
+
+   
+    string result = addFunction(numberA, numberB, m);
+    cout << "Result: " << result << endl;
+
+    return 0;
+}
